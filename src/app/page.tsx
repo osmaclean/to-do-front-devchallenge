@@ -1,5 +1,9 @@
-import Image from 'next/image'
+import Header from '@/components/organism/header/Header'
 
 export default function Home() {
-  return <></>
+  return (
+    <>
+      <Header />
+    </>
+  )
 }
