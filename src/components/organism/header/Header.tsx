@@ -6,7 +6,7 @@ const Header = () => {
   return (
     <>
       <header className="w-full">
-        <nav className="shadow-header flex h-14 w-full items-center justify-between bg-white px-6 py-4">
+        <nav className="sm-1:relative sm-1:justify-start sm-1:gap-8 flex h-14 w-full items-center justify-between bg-white px-6 py-4 shadow-header">
           <div className="flex items-center justify-center gap-3">
             <Image
               src="/logo.png"
@@ -19,7 +19,7 @@ const Header = () => {
           </div>
           <SearchHeader />
           <Image
-            className="h-[.875rem] w-[.875rem]"
+            className="sm-1:absolute sm-1:right-8 h-[.875rem] w-[.875rem]"
             alt="Cross"
             aria-label="Cross"
             src="/x.png"

@@ -3,7 +3,7 @@ import React from 'react'
 
 const SearchHeader = () => {
   return (
-    <div className="w-[45%]">
+    <div className="md-0.1:w-[33rem] w-[45%]">
       <label
         htmlFor="search"
         className="relative flex items-center justify-center"
@@ -11,7 +11,7 @@ const SearchHeader = () => {
         <input
           type="text"
           id="search"
-          className="border-grey-1XX placeholder:text-grey-2XX w-full rounded border p-1 text-[.563rem] outline-none placeholder:text-[.563rem] placeholder:font-normal"
+          className="sm-1:h-7 w-full rounded border border-grey-1XX p-1 text-[.563rem] shadow-createTask outline-none placeholder:text-[.563rem] placeholder:font-normal placeholder:text-grey-2XX"
           autoComplete="off"
           placeholder="Pesquisar notas"
         />

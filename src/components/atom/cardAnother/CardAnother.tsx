@@ -1,7 +1,7 @@
 import Image from 'next/image'
 import React from 'react'
 
-const CardFavorite = () => {
+const CardAnother = () => {
   return (
     <div className="sm-0:w-[24rem] relative flex h-[27rem] w-full flex-col items-center justify-start rounded-3xl border border-grey-1XX bg-white pb-[.875rem] shadow-createTask">
       <div className="flex w-[90%] items-center justify-between rounded-3xl">
@@ -9,7 +9,7 @@ const CardFavorite = () => {
         <Image
           width={16}
           height={16}
-          src="/starYellow.png"
+          src="/starGrey.png"
           alt="Favorite Button"
           aria-label="Favorite Button"
           className="h-[1.188rem] w-[1.188rem] cursor-pointer duration-300 hover:scale-110"
@@ -22,7 +22,7 @@ const CardFavorite = () => {
         descrição longa Teste de descrição longa
       </span>
       <div className="absolute bottom-3 flex w-[90%] items-center justify-between ">
-        <div className="flex items-center justify-center gap-3">
+        <div className="flex items-center justify-center">
           <div className="hover:bg-orange-1XX cursor-pointer rounded-2xl p-2 duration-300">
             <Image
               src="/pencil.png"
@@ -30,7 +30,7 @@ const CardFavorite = () => {
               aria-label="Edit Button"
               width={24}
               height={24}
-              className="h-[1.125rem] w-[1.125rem] cursor-pointer"
+              className="h-[1.125rem] w-[1.125rem]"
             />
           </div>
           <div className="hover:bg-orange-1XX cursor-pointer rounded-2xl p-2 duration-300">
@@ -40,7 +40,7 @@ const CardFavorite = () => {
               aria-label="Color Button"
               width={24}
               height={24}
-              className="h-[1.125rem] w-[1.125rem] cursor-pointer"
+              className="h-[1.125rem] w-[1.125rem]"
             />
           </div>
         </div>
@@ -51,7 +51,7 @@ const CardFavorite = () => {
             aria-label="Remove Button"
             width={24}
             height={24}
-            className="h-[1.125rem] w-[1.125rem] cursor-pointer"
+            className="h-[1.125rem] w-[1.125rem]"
           />
         </div>
       </div>
@@ -59,4 +59,4 @@ const CardFavorite = () => {
   )
 }
 
-export default CardFavorite
+export default CardAnother

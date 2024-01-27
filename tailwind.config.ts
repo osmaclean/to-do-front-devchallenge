@@ -7,6 +7,14 @@ const config: Config = {
     './src/app/**/*.{js,ts,jsx,tsx,mdx}',
   ],
   theme: {
+    screens: {
+      'sm-0': { min: '450px' },
+      'sm-1': { min: '600px' },
+      'sm-2': { min: '730px' },
+      'md-0': { min: '1040px' },
+      'md-0.1': { min: '1120px' },
+      'md-1': { min: '1440px' },
+    },
     extend: {
       boxShadow: {
         header: '0px 1px 7px 0px rgba(149,149,149,0.25)',
@@ -18,6 +26,7 @@ const config: Config = {
         'grey-3XX': '#F0F2F5',
         'grey-4XX': '#50656E',
         'grey-5XX': '#464646',
+        'orange-1XX': '#FFE3B3',
       },
     },
   },

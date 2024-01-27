@@ -3,7 +3,7 @@ import React from 'react'
 
 const CreateTask = () => {
   return (
-    <section className="border-grey-1XX shadow-createTask mt-6 flex w-[85%] flex-col items-center justify-center rounded-3xl border bg-white pb-[.875rem]">
+    <section className="md-0:w-[33rem] sm-1:w-[50%] mt-6 flex w-[85%] flex-col items-center justify-center rounded-3xl border border-grey-1XX bg-white pb-[.875rem] shadow-createTask">
       <div className=" flex w-[90%] items-center justify-between rounded-3xl">
         <input
           type="text"
@@ -19,9 +19,9 @@ const CreateTask = () => {
           className="h-[1.188rem] w-[1.188rem] cursor-pointer"
         />
       </div>
-      <div className="bg-grey-1XX h-[.08rem] w-full"></div>
+      <div className="h-[.08rem] w-full bg-grey-1XX"></div>
       <textarea
-        className="text-grey-4XX placeholder:text-grey-4XX mt-3 w-[90%] resize-none text-[.813rem] outline-none placeholder:text-[.813rem] placeholder:font-normal"
+        className="mt-3 w-[90%] resize-none text-[.813rem] text-grey-4XX outline-none placeholder:text-[.813rem] placeholder:font-normal placeholder:text-grey-4XX"
         placeholder="Criar nota..."
         cols={3}
         rows={3}
