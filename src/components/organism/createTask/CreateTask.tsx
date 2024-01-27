@@ -4,11 +4,11 @@ import React from 'react'
 const CreateTask = () => {
   return (
     <section className="border-grey-1XX shadow-createTask mt-6 flex w-[85%] flex-col items-center justify-center rounded-3xl border bg-white pb-[.875rem]">
-      <div className=" flex w-[90%] items-center justify-center rounded-3xl">
+      <div className=" flex w-[90%] items-center justify-between rounded-3xl">
         <input
           type="text"
           placeholder="Título"
-          className="w-full rounded-3xl py-[.875rem] text-sm font-semibold outline-none placeholder:text-sm placeholder:font-bold placeholder:text-black"
+          className="w-[80%] rounded-3xl py-[.875rem] text-sm font-semibold outline-none placeholder:text-sm placeholder:font-bold placeholder:text-black"
         />
         <Image
           width={16}
@@ -16,7 +16,7 @@ const CreateTask = () => {
           src="/starGrey.png"
           alt="Favorite Button"
           aria-label="Favorite Button"
-          className="pointer h-[1.188rem] w-[1.188rem] "
+          className="h-[1.188rem] w-[1.188rem] cursor-pointer"
         />
       </div>
       <div className="bg-grey-1XX h-[.08rem] w-full"></div>

@@ -6,7 +6,7 @@ const Header = () => {
   return (
     <>
       <header className="w-full">
-        <nav className="shadow-header flex h-10 w-full items-center justify-between bg-white px-6 py-4">
+        <nav className="shadow-header flex h-14 w-full items-center justify-between bg-white px-6 py-4">
           <div className="flex items-center justify-center gap-3">
             <Image
               src="/logo.png"

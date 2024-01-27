@@ -17,6 +17,7 @@ const config: Config = {
         'grey-2XX': '#9A9A9A',
         'grey-3XX': '#F0F2F5',
         'grey-4XX': '#50656E',
+        'grey-5XX': '#464646',
       },
     },
   },
