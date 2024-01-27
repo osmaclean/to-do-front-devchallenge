@@ -9,7 +9,6 @@ const ContainerFavorite = () => {
       </h6>
       <div className="sm-0:flex-wrap sm-0:flex-row sm-0:justify-start flex w-full flex-col items-center justify-center gap-8">
         <CardFavorite />
-        <CardFavorite />
       </div>
     </section>
   )

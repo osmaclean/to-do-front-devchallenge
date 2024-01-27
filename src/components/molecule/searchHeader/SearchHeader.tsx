@@ -20,7 +20,7 @@ const SearchHeader = () => {
           alt="Search Button"
           aria-label="Search Button"
           width={24}
-          className="absolute right-2 h-[.875rem] w-[.875rem]"
+          className="absolute right-2 h-[.875rem] w-[.875rem] cursor-pointer duration-300 hover:scale-110"
           height={24}
         />
       </label>
