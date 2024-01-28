@@ -2,7 +2,6 @@
 import Image from 'next/image'
 import React, { useState } from 'react'
 import NavColor from '../navColor/NavColor'
-import removeTasks from '@/api/removeTasks.service'
 
 interface CardFavoriteProps {
   title: string
@@ -35,7 +34,6 @@ const CardFavorite: React.FC<CardFavoriteProps> = ({
 
   const handleRemoveClick = async () => {
     try {
-      await removeTasks(taskId)
       onRemoveTask(taskId)
     } catch (error) {
       console.error('Error removing tasks:', error)
@@ -64,7 +62,7 @@ const CardFavorite: React.FC<CardFavoriteProps> = ({
       </span>
       <div className="absolute bottom-3 flex w-[90%] items-center justify-between ">
         <div className="flex items-center justify-center gap-3">
-          <div className="hover:bg-orange-1XX cursor-pointer rounded-2xl p-2 duration-300">
+          <div className="cursor-pointer rounded-2xl p-2 duration-300 hover:bg-orange-1XX">
             <Image
               src="/pencil.png"
               alt="Edit Button"
@@ -76,7 +74,7 @@ const CardFavorite: React.FC<CardFavoriteProps> = ({
           </div>
           <div
             onClick={handleColorClick}
-            className="hover:bg-orange-1XX relative cursor-pointer rounded-2xl p-2 duration-300"
+            className="relative cursor-pointer rounded-2xl p-2 duration-300 hover:bg-orange-1XX"
           >
             <Image
               src="/bucket.png"
@@ -93,7 +91,7 @@ const CardFavorite: React.FC<CardFavoriteProps> = ({
         </div>
         <div
           onClick={handleRemoveClick}
-          className="hover:bg-orange-1XX cursor-pointer rounded-2xl p-2 duration-300"
+          className="cursor-pointer rounded-2xl p-2 duration-300 hover:bg-orange-1XX"
         >
           <Image
             src="/x.png"
