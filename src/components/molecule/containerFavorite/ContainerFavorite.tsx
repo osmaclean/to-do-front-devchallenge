@@ -1,6 +1,6 @@
 'use client'
 import CardFavorite from '@/components/atom/cardFavorite/CardFavorite'
-import React, { useEffect, useState } from 'react'
+import React, { useEffect } from 'react'
 import getAllTasks from '@/api/getAllTasks.service'
 import removeTasks from '@/api/removeTasks.service'
 
@@ -12,14 +12,19 @@ export interface Task {
   onRemoveTask: (taskId: string) => void
 }
 
-const ContainerFavorite = () => {
-  const [favoriteTasksState, setFavoriteTasksState] = useState<Task[]>([])
+interface ContainerFavoriteProps {
+  setFavoriteTasks: React.Dispatch<React.SetStateAction<Task[]>>
+  favoriteTasks: Task[]
+}
 
+const ContainerFavorite: React.FC<ContainerFavoriteProps> = ({
+  setFavoriteTasks,
+  favoriteTasks,
+}) => {
   const fetchFavoriteTasks = async () => {
     try {
       const { favoriteTasks } = await getAllTasks()
-      setFavoriteTasksState(favoriteTasks)
-      console.log('update: ', favoriteTasks)
+      setFavoriteTasks(favoriteTasks)
     } catch (error) {
       console.error(`Error getting favorite tasks: ${error}`)
       throw error
@@ -45,7 +50,7 @@ const ContainerFavorite = () => {
         Favoritas
       </h6>
       <div className="flex w-full flex-col items-center justify-center gap-8 sm-0:flex-row sm-0:flex-wrap sm-0:justify-start">
-        {favoriteTasksState.map((task) => (
+        {favoriteTasks.map((task) => (
           <CardFavorite
             key={task.id}
             title={task.title}
@@ -53,6 +58,7 @@ const ContainerFavorite = () => {
             favorite={task.favorite ?? false}
             taskId={task.id}
             onRemoveTask={() => handleRemoveTask(task.id)}
+            setFavoriteTasks={setFavoriteTasks}
           />
         ))}
       </div>
