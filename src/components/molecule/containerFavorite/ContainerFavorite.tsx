@@ -1,10 +1,10 @@
 'use client'
 import CardFavorite from '@/components/atom/cardFavorite/CardFavorite'
-import React, { useEffect, useState } from 'react'
+import React, { useEffect } from 'react'
 import getAllTasks from '@/api/getAllTasks.service'
 import removeTasks from '@/api/removeTasks.service'
 
-interface Task {
+export interface Task {
   id: string
   title: string
   message: string
@@ -12,14 +12,19 @@ interface Task {
   onRemoveTask: (taskId: string) => void
 }
 
-const ContainerFavorite = () => {
-  const [favoriteTasksState, setFavoriteTasksState] = useState<Task[]>([])
+interface ContainerFavoriteProps {
+  setFavoriteTasks: React.Dispatch<React.SetStateAction<Task[]>>
+  favoriteTasks: Task[]
+}
 
+const ContainerFavorite: React.FC<ContainerFavoriteProps> = ({
+  setFavoriteTasks,
+  favoriteTasks,
+}) => {
   const fetchFavoriteTasks = async () => {
     try {
       const { favoriteTasks } = await getAllTasks()
-      setFavoriteTasksState(favoriteTasks)
-      console.log('update: ', favoriteTasks)
+      setFavoriteTasks(favoriteTasks)
     } catch (error) {
       console.error(`Error getting favorite tasks: ${error}`)
       throw error
@@ -41,11 +46,11 @@ const ContainerFavorite = () => {
 
   return (
     <section className="my-11 flex w-full flex-col items-center justify-center gap-2">
-      <h6 className="md-1:w-[97%] md-0:w-[96%] sm-2:w-[94%] sm-1:w-[92%] w-[90%] text-left text-xs font-normal text-grey-5XX">
+      <h6 className="w-[90%] text-left text-xs font-normal text-grey-5XX sm-1:w-[92%] sm-2:w-[94%] md-0:w-[96%] md-1:w-[97%]">
         Favoritas
       </h6>
-      <div className="sm-0:flex-wrap sm-0:flex-row sm-0:justify-start flex w-full flex-col items-center justify-center gap-8">
-        {favoriteTasksState.map((task) => (
+      <div className="flex w-full flex-col items-center justify-center gap-8 sm-0:flex-row sm-0:flex-wrap sm-0:justify-start">
+        {favoriteTasks.map((task) => (
           <CardFavorite
             key={task.id}
             title={task.title}
@@ -53,6 +58,7 @@ const ContainerFavorite = () => {
             favorite={task.favorite ?? false}
             taskId={task.id}
             onRemoveTask={() => handleRemoveTask(task.id)}
+            setFavoriteTasks={setFavoriteTasks}
           />
         ))}
       </div>

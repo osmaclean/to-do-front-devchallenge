@@ -2,7 +2,9 @@
 import Image from 'next/image'
 import React, { useState } from 'react'
 import NavColor from '../navColor/NavColor'
-import removeTasks from '@/api/removeTasks.service'
+import editFavorite from '@/api/editFavorite.service'
+import updateTasks from '@/api/updateTasks.service'
+import getAllTasks from '@/api/getAllTasks.service'
 
 interface CardFavoriteProps {
   title: string
@@ -10,6 +12,7 @@ interface CardFavoriteProps {
   favorite?: boolean
   taskId: string
   onRemoveTask: (taskId: string) => void
+  setFavoriteTasks: React.Dispatch<React.SetStateAction<Task[]>>
 }
 
 const CardFavorite: React.FC<CardFavoriteProps> = ({
@@ -18,11 +21,15 @@ const CardFavorite: React.FC<CardFavoriteProps> = ({
   favorite = false,
   taskId,
   onRemoveTask,
+  setFavoriteTasks,
 }) => {
   const [isNavColorVisible, setIsNavColorVisible] = useState<boolean>(false)
   const [selectedBorderColor, setSelectedBorderColor] =
     useState<string>('border-grey-1XX')
   const [selectedBgColor, setSelectedBgColor] = useState<string>('bg-white')
+  const [isEditing, setIsEditing] = useState<boolean>(false)
+  const [editedTitle, setEditedTitle] = useState<string>(title)
+  const [editedMessage, setEditedMessage] = useState<string>(message)
 
   const handleColorClick = () => {
     setIsNavColorVisible(!isNavColorVisible)
@@ -35,11 +42,41 @@ const CardFavorite: React.FC<CardFavoriteProps> = ({
 
   const handleRemoveClick = async () => {
     try {
-      await removeTasks(taskId)
       onRemoveTask(taskId)
     } catch (error) {
       console.error('Error removing tasks:', error)
     }
+  }
+
+  const fetchFavoriteTasks = async () => {
+    try {
+      const { favoriteTasks } = await getAllTasks()
+      setFavoriteTasks(favoriteTasks)
+    } catch (error) {
+      console.error(`Error getting favorite tasks: ${error}`)
+      throw error
+    }
+  }
+
+  const handleEditClick = () => {
+    setIsEditing(!isEditing)
+  }
+
+  const handleSaveClick = async () => {
+    try {
+      await updateTasks(taskId, {
+        title: editedTitle,
+        message: editedMessage,
+        favorite,
+      })
+      fetchFavoriteTasks()
+
+      // Finalizar o modo de edição
+      setIsEditing(false)
+    } catch (error) {
+      console.error('Error updating tasks:', error)
+    }
+    setIsEditing(false)
   }
 
   const styleFirstContainer = `sm-0:w-[24rem] relative flex h-[27rem] w-full flex-col items-center justify-start rounded-3xl border ${selectedBorderColor} ${selectedBgColor} pb-[.875rem] shadow-createTask`
@@ -48,10 +85,24 @@ const CardFavorite: React.FC<CardFavoriteProps> = ({
   return (
     <div className={styleFirstContainer}>
       <div className="flex w-[90%] items-center justify-between rounded-3xl">
-        <h1 className="py-[.875rem] text-sm font-semibold">{title}</h1>
+        <h1 className="py-[.875rem] text-sm font-semibold">
+          {isEditing ? (
+            <input
+              type="text"
+              value={editedTitle}
+              onChange={(e) => setEditedTitle(e.target.value)}
+            />
+          ) : (
+            editedTitle
+          )}
+        </h1>
         <Image
           width={16}
           height={16}
+          onClick={() => {
+            editFavorite(taskId)
+            location.reload()
+          }}
           src={favorite ? '/starYellow.png' : '/starGrey.png'}
           alt="Favorite Button"
           aria-label="Favorite Button"
@@ -60,11 +111,23 @@ const CardFavorite: React.FC<CardFavoriteProps> = ({
       </div>
       <div className={styleDivisor}></div>
       <span className=" mt-3 w-[90%] text-[.813rem] text-grey-4XX">
-        {message}
+        {isEditing ? (
+          <textarea
+            value={editedMessage}
+            onChange={(e) => setEditedMessage(e.target.value)}
+            cols={3}
+            rows={3}
+          />
+        ) : (
+          editedMessage
+        )}
       </span>
       <div className="absolute bottom-3 flex w-[90%] items-center justify-between ">
         <div className="flex items-center justify-center gap-3">
-          <div className="hover:bg-orange-1XX cursor-pointer rounded-2xl p-2 duration-300">
+          <div
+            onClick={isEditing ? handleSaveClick : handleEditClick}
+            className="cursor-pointer rounded-2xl p-2 duration-300 hover:bg-orange-1XX"
+          >
             <Image
               src="/pencil.png"
               alt="Edit Button"
@@ -76,7 +139,7 @@ const CardFavorite: React.FC<CardFavoriteProps> = ({
           </div>
           <div
             onClick={handleColorClick}
-            className="hover:bg-orange-1XX relative cursor-pointer rounded-2xl p-2 duration-300"
+            className="relative cursor-pointer rounded-2xl p-2 duration-300 hover:bg-orange-1XX"
           >
             <Image
               src="/bucket.png"
@@ -93,7 +156,7 @@ const CardFavorite: React.FC<CardFavoriteProps> = ({
         </div>
         <div
           onClick={handleRemoveClick}
-          className="hover:bg-orange-1XX cursor-pointer rounded-2xl p-2 duration-300"
+          className="cursor-pointer rounded-2xl p-2 duration-300 hover:bg-orange-1XX"
         >
           <Image
             src="/x.png"

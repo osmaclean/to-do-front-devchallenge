@@ -2,17 +2,22 @@
 import Image from 'next/image'
 import React, { useState } from 'react'
 import NavColor from '../navColor/NavColor'
+import editFavorite from '@/api/editFavorite.service'
 
 interface CardAnother {
   title: string
   message: string
   favorite?: boolean
+  taskId: string
+  onRemoveTask: (taskId: string) => void
 }
 
 const CardAnother: React.FC<CardAnother> = ({
   title,
   message,
   favorite = false,
+  taskId,
+  onRemoveTask,
 }) => {
   const [isNavColorVisible, setIsNavColorVisible] = useState<boolean>(false)
   const [selectedBorderColor, setSelectedBorderColor] =
@@ -28,6 +33,14 @@ const CardAnother: React.FC<CardAnother> = ({
     setSelectedBgColor(bgColor)
   }
 
+  const handleRemoveClick = async () => {
+    try {
+      onRemoveTask(taskId)
+    } catch (error) {
+      console.error('Error removing tasks:', error)
+    }
+  }
+
   const styleFirstContainer = `sm-0:w-[24rem] relative flex h-[27rem] w-full flex-col items-center justify-start rounded-3xl border ${selectedBorderColor} ${selectedBgColor} pb-[.875rem] shadow-createTask`
   const styleDivisor = `h-[.08rem] w-full ${selectedBgColor === 'bg-white' ? 'bg-grey-1XX' : 'bg-white'}`
 
@@ -38,6 +51,10 @@ const CardAnother: React.FC<CardAnother> = ({
         <Image
           width={16}
           height={16}
+          onClick={() => {
+            editFavorite(taskId)
+            location.reload()
+          }}
           src={!favorite ? '/starGrey.png' : '/starYellow.png'}
           alt="Favorite Button"
           aria-label="Favorite Button"
@@ -50,7 +67,7 @@ const CardAnother: React.FC<CardAnother> = ({
       </span>
       <div className="absolute bottom-3 flex w-[90%] items-center justify-between ">
         <div className="flex items-center justify-center">
-          <div className="hover:bg-orange-1XX cursor-pointer rounded-2xl p-2 duration-300">
+          <div className="cursor-pointer rounded-2xl p-2 duration-300 hover:bg-orange-1XX">
             <Image
               src="/pencil.png"
               alt="Edit Button"
@@ -62,7 +79,7 @@ const CardAnother: React.FC<CardAnother> = ({
           </div>
           <div
             onClick={handleColorClick}
-            className="hover:bg-orange-1XX relative cursor-pointer rounded-2xl p-2 duration-300"
+            className="relative cursor-pointer rounded-2xl p-2 duration-300 hover:bg-orange-1XX"
           >
             <Image
               src="/bucket.png"
@@ -77,7 +94,10 @@ const CardAnother: React.FC<CardAnother> = ({
             )}
           </div>
         </div>
-        <div className="hover:bg-orange-1XX cursor-pointer rounded-2xl p-2 duration-300">
+        <div
+          onClick={handleRemoveClick}
+          className="cursor-pointer rounded-2xl p-2 duration-300 hover:bg-orange-1XX"
+        >
           <Image
             src="/x.png"
             alt="Remove Button"
